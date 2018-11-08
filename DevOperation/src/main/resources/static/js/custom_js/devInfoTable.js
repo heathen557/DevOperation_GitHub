@@ -6,6 +6,7 @@ var totalpages = 1;
 var curtpage = 1;
 var tree;
 
+
 function ModalShow(){
 	
 	console.log("modalshow!");
@@ -56,8 +57,24 @@ $(function () {
                  nodeIcon: 'glyphicon glyphicon-globe',
                  emptyIcon: '',    		// 没有子节点的节点图标
                  multiSelect: false,    // 多选
-                 onNodeSelected: function(event, data) {
+                 onNodeSelected: function(event, data) {        //用户选择停车场时
                 	    // Your logic goes here
+                	
+                	 /**********************************/
+                		var value_id;   //设备号
+                	    $('#query-form').find('[name]').each(function () {
+                	    	value_id = $(this).val();
+                	        // console.log(value);
+                	        if (value_id != '') {
+                	        	globalParams['devid'] = value_id;
+                	        }else{
+                	        	globalParams['devid'] = '0';
+                	        }
+                	    });
+                	/******************************/
+                	 
+                	 
+                	 
                 	console.log("onNodeSelected");
                 	// temp = JSON.stringify(data);
                 	console.log(" data.level = " + data.level);
@@ -211,7 +228,7 @@ var int=setInterval(function() {
     
 	changeAllChannelRealTime();
 	
-}, 5000);
+}, 20000);
 
 $(function(){
 	paginatorInit();
@@ -267,19 +284,19 @@ $('#bp-element').bootstrapPaginator({
 // 设备号查询
 function customSearch() {
 	
-	var value;
+	var value_id;   //设备号
     $('#query-form').find('[name]').each(function () {
-    	 value = $(this).val();
+    	value_id = $(this).val();
         // console.log(value);
-        if (value != '') {
+        if (value_id != '') {
         	// console.log(value);
-        	globalParams['devid'] = value;
+        	globalParams['devid'] = value_id;
         }
     });
     
-    if(value == '')
+    if(value_id == '')
     {
-    	alert("搜索设备号不能为空");
+    	alert("搜索设备号不能为空!");
     	return;
     }
     
@@ -317,6 +334,20 @@ function orgSearch(){
 	dataInit();
 	var nodeId;
 	var orgnization = $("#orgsearch").val();
+	
+	
+	//判断设备号 是否为空
+	var value_id;   //设备号
+    $('#query-form').find('[name]').each(function () {
+    	value_id = $(this).val();
+        // console.log(value);
+        if (value_id != '') {
+        	globalParams['devid'] = value_id;
+        }else{
+        	globalParams['devid'] = '0';
+        }
+    });
+	
 	
 	console.log("orgnization is :" + orgnization);
 	var searchNodes = $('#tree').treeview('search', [orgnization, {
