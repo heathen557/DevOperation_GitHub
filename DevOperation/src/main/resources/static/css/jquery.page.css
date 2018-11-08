@@ -1,0 +1,51 @@
+
+#div-page
+{
+	float:right;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.page-ul
+{
+    display:inline-block;    
+}
+
+.page-ul li
+{
+    display: inline-block;
+    vertical-align: text-bottom;
+    line-height: 25px; 
+    min-width: 36px;
+    width:auto;
+    text-align: center;    
+    text-decoration: none;
+    overflow: hidden;
+    margin-right: 9px;
+    background-color:buttonface;
+    border:1px solid black;
+    padding:0px 8px 0px 8px; 
+    border-radius: 5px 5px 5px 5px;  
+}
+
+.page-ul li:hover
+{
+	text-decoration:none;
+    background-color: LightSkyBlue;
+	cursor:pointer; 
+    }
+
+.page-ul li.page-li-previous , .page-ul li.page-li-next
+{
+     width: 60px;   
+}
+.page-ul li.current-li
+{   
+    vertical-align: text-bottom;    
+    text-align: center;   
+    text-decoration: none;   
+    margin-right: 9px;  
+    border: 0;     
+    font-weight:bold;
+  
+}
