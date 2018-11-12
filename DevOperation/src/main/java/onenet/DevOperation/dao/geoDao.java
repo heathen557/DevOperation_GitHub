@@ -26,7 +26,12 @@ public interface geoDao  extends CrudRepository<Geo, Long>{
 //    		,nativeQuery = true)   
 //    public Integer totaloffindAll(String starttime,String stoptime,String devid);
     
-    @Query(value ="SELECT i.id,i.devid ,a.IMEI,i.CARINFO,i.CURX,i.CURY,i.CURZ,i.INITX,i.INITY,i.INITZ,i.RTC ,i.PAIRID FROM (SELECT * FROM  geoval WHERE rtc between DATE_FORMAT(?1,'%Y-%m-%d %H:%i:%S') and DATE_FORMAT(?2,'%Y-%m-%d %H:%i:%S') and DEVID IN(SELECT DEVID from devattr WHERE NODEID IN(SELECT NODEID from orgnization WHERE path LIKE CONCAT('%/',?3,'_%')))) i LEFT JOIN devattr a on  (i.DEVID = a.DEVID) limit ?4,?5"
+    //add the sql 18/11/12
+//    @Query(value = "SELECT i.id,i.devid ,a.IMEI,i.CARINFO,i.CURX,i.CURY,i.CURZ,i.INITX,i.INITY,i.INITZ,i.RTC ,i.PAIRID FROM (SELECT * FROM  geoval WHERE rtc between DATE_FORMAT(?1,'%Y-%m-%d %H:%i:%S') and DATE_FORMAT(?2,'%Y-%m-%d %H:%i:%S') and DEVID IN(SELECT DEVID from devattr WHERE NODEID = ？3 and IMEI = ?4 ))) i LEFT JOIN devattr a on  (i.DEVID = a.DEVID) limit ?5,?6"
+//    		,nativeQuery = true)
+//    public List<Geo> findByImei(String starttime,String stoptime,String nodeid,String imei ,int page,int pageSize);
+    
+    @Query(value ="SELECT i.id,i.devid ,a.imei,i.CARINFO,i.CURX,i.CURY,i.CURZ,i.INITX,i.INITY,i.INITZ,i.RTC ,i.PAIRID FROM (SELECT * FROM  geoval WHERE rtc between DATE_FORMAT(?1,'%Y-%m-%d %H:%i:%S') and DATE_FORMAT(?2,'%Y-%m-%d %H:%i:%S') and DEVID IN(SELECT DEVID from devattr WHERE NODEID IN(SELECT NODEID from orgnization WHERE path LIKE CONCAT('%/',?3,'_%')))) i LEFT JOIN devattr a on  (i.DEVID = a.DEVID) limit ?4,?5"
     		,nativeQuery = true)    
     public List<Geo> findByNodeid(String starttime,String stoptime,String nodeid,int page,int pageSize);
     

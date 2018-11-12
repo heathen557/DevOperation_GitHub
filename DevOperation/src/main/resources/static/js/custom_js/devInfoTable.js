@@ -52,14 +52,20 @@ $(function () {
              $('#tree').treeview({
                  data: result,         
                  // showCheckbox: true,
-                 highlightSelected: true,    
+//                 highlightSelected: true,    
                  // nodeIcon: 'glyphicon glyphicon-user', //节点上的图标
                  nodeIcon: 'glyphicon glyphicon-globe',
                  emptyIcon: '',    		// 没有子节点的节点图标
                  multiSelect: false,    // 多选
+                 
+//                 onNodeChecked: function(event, data){
+//            	 alert("取消选中");
+//             }
+                 
                  onNodeSelected: function(event, data) {        //用户选择停车场时
                 	    // Your logic goes here
-                	
+
+
                 	 /**********************************/
                 		var value_id;   //设备号
                 	    $('#query-form').find('[name]').each(function () {
@@ -73,8 +79,6 @@ $(function () {
                 	    });
                 	/******************************/
                 	 
-                	 
-                	 
                 	console.log("onNodeSelected");
                 	// temp = JSON.stringify(data);
                 	console.log(" data.level = " + data.level);
@@ -86,6 +90,12 @@ $(function () {
                 		// paginatorInit();
                 	}
                 }
+             
+             
+             
+
+             
+             
              });  
          },
          error: function () {

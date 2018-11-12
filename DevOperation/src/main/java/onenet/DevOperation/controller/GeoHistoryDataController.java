@@ -88,8 +88,27 @@ public class GeoHistoryDataController {
             System.out.println(result.toJSONString()); 
     		return result.toJSONString();
     	}
-        List<Geo> pages = geodao.findByRtc(starttime,stoptime,imei,(pagebnumber-1)*pagesize,pagesize);
-        Integer total =geodao.totaloffindAll(starttime,stoptime,imei);
+//    	else //按照设备号进行查询
+//    	{
+//    		Integer nodeidInt = orgdao.findTccByNodeid(nodeid); ///找到tcc
+//    		System.out.println("nodeidInt:"+Integer.toString(nodeidInt));
+//    		List<Geo> pages = geodao.findByImei(starttime, stoptime, Integer.toString(nodeidInt),imei, (pagebnumber-1)*pagesize, pagesize);
+//            Integer total =geodao.totaloffindAll1(starttime, stoptime, Integer.toString(nodeidInt));
+//            System.out.println("total:"+total);  
+//            JSONObject result = new JSONObject();  
+//            result.put("rows",pages);  
+//            result.put("total",total);  
+//            System.out.println(result.toJSONString()); 
+//    		return result.toJSONString();
+//    		
+//    	}
+    	
+    	
+    	
+        List<Geo> pages = geodao.findByRtc(imei,starttime,stoptime,(pagebnumber-1)*pagesize,pagesize);
+        Integer total =geodao.totaloffindAll(imei,starttime,stoptime);
+        
+        System.out.println("查询到的数据："+pages.toString());
         System.out.println("total:"+total);  
         JSONObject result = new JSONObject();  
         result.put("rows",pages);  
