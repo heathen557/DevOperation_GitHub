@@ -174,6 +174,9 @@ public class AttrController  {
 //    	log.info("path :"+ path);
 //    	Orgnization orgnization = new Orgnization(nextnodeid,nodename,path,remark);
 //    	orgdao.save(orgnization);
+    	
+    	System.out.println("接收到的参数lastpath="+lastpath + "  level="+level + " nodename="+nodename + " orgid="+orgid +"  remark="+remark);
+    	
     	try {
     		
     		orgSettingService.addOrg(lastpath, level,  nodename,  orgid, remark);
@@ -260,8 +263,15 @@ public class AttrController  {
     		@RequestParam(value = "pageNumber", defaultValue = "1") Integer  pagebnumber,
     		@RequestParam(value = "parentid", defaultValue = "1") String  parentid){
     	//Orgnization orgnization = new Orgnization();
+    	
+    
+    	
+    	
     	JSONObject result = new JSONObject();  
     	String path = orgdao.findPathByNodeid(parentid);
+    	
+    	System.out.println("查询的路径为：path："+ path);
+    	
    		 List<Orgnization> pages = orgdao.findnodeByParentId(path,(pagebnumber-1)*pagesize,pagesize);
    		 
    	    	Integer total = orgdao.findnodeCountByParentId(path);

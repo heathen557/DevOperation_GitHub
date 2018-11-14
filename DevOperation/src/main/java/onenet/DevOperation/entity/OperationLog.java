@@ -11,16 +11,19 @@ import javax.persistence.Table;
 @Table(name = "operation_log")
 public class OperationLog {
 
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer LOGGID;
 
 	@Column(length=10)
 	private Integer CZLX;
 	
 	private String CZNR;
+	
 	@Column(length=10)
 	private String CZR;
+	
 	@Column(length=30)
 	private String CZSJ;
 	
@@ -73,11 +76,14 @@ public class OperationLog {
 	}
 	private String BZ;
 
-//	@Override
-//	public String toString() {
-//		return "Operation_log [LOGGID=" + LOGGID + ", YWLX=" + YWLX + ", CZLX=" + CZLX + ", CZNR=" + CZNR + ", CZR="
-//				+ CZR + ", CZSJ=" + CZSJ + ", BZ=" + BZ + "]";
-//	}
+
+	@Override
+	public String toString() {
+		return "OperationLog [LOGGID=" + LOGGID + ", CZLX=" + CZLX + ", CZNR=" + CZNR + ", CZR=" + CZR + ", CZSJ="
+				+ CZSJ + ", BZ=" + BZ + "]";
+	}
+
+
 	
 	
 	

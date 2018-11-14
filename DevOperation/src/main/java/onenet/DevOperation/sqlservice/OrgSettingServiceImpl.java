@@ -72,14 +72,14 @@ public class OrgSettingServiceImpl implements OrgSettingService{
     primaryKeyName = "rowid", primaryKeySort = 0, primaryKeyBelongClass = Orgnization.class)
 	public Orgnization addOrg(String   lastpath,Integer  level, String  nodename, String  orgid, String  remark) {
 		// TODO Auto-generated method stub
-		String nextnodeid = orgdao.findNextNodeid();
+		String nextnodeid = orgdao.findNextNodeid();   //找到最大节点号 之后加一
     	 
     	//String lastpath = orgdao.findPathByNodeid(lastnodeid);
     	String path = lastpath + "/" + nextnodeid;
     	 
     	Orgnization orgnization = new Orgnization(nextnodeid,nodename,path,remark);
-    	orgdao.save(orgnization);
     	
+    	orgdao.save(orgnization);
 		return orgnization;
 		
 	}

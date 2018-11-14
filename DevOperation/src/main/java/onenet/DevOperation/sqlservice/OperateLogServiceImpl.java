@@ -33,7 +33,17 @@ public class OperateLogServiceImpl implements OperateLogService{
 	@Override
 	public int saveOperateLog(OperationLog oper) {
 		// TODO Auto-generated method stub
-		operationDao.saveOperateLog( oper.getCZLX(),oper.getCZNR() ,oper.getCZR() ,oper.getCZSJ() ,oper.getBZ() );
+		
+		System.out.println("保存数据库时的内容为oper.getCZLX()："+oper.getCZLX() +"oper.getCZNR() :"+oper.getCZNR() 
+						+ "oper.getCZR():" + oper.getCZR() +"oper.getCZSJ():" + oper.getCZSJ() +"oper.getBZ():" + oper.getBZ());
+	
+		
+		// error ：could not extract ResultSet     11/14
+//		operationDao.saveOperateLog( oper.getCZLX(),oper.getCZNR() ,oper.getCZR() ,oper.getCZSJ() ,oper.getBZ() );
+		
+		//       11/14 
+		operationDao.save(oper);
+		
 		
 		return 0;
 	}
