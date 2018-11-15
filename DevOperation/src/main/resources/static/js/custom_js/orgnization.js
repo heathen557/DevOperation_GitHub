@@ -102,14 +102,20 @@ function sameDev() {
 }
 
 function submitEditData() {
-	for (var i = 0; i < allTableData.length; i++) {
-		if (allTableData[i].nodename == $("#txt_orgname").val()) {
+	
+	for (var i = 0; i < allTableData.length; i++) 
+	{
+		if (allTableData[i].nodename == $("#txt_orgname").val()) 
+		{
 			$('#sameModal').modal('show');
 			sameorg = allTableData[i].nodename;
-			// alert("机构名称不可重复！");
+			 alert("机构名称不可重复！");
 			return;
 		}
 	}
+	
+//	console.log("已经运行带这里了~");
+	
 	sameorg = null;
 	var param = $("#myeditorgform").serialize();
 	console.log('myeditorgform:' + param);
@@ -183,11 +189,12 @@ window.operateEvents = {
 		var regex = new RegExp('/', 'g');
 		var result = row.path.match(regex);
 		var count = !result ? 0 : result.length;
-		console.log("数量为 " + count);
-		$('#txt_level').val(count);
-		$('#txt_orgname').val(row.nodename);
-
-		$('#txt_lastlevel').empty();
+		console.log("row =" + row.toString +" 数量为 " + count);
+		
+		$('#txt_level').val(count);                     //市级、区级、街道级、停车场及
+		$('#txt_orgname').val(row.nodename);            //机构名称
+		$('#txt_lastlevel').empty();					//上级级别
+		
 		var count = $('#txt_level').val();
 		if ((count - 1) == 1) {
 			$('#txt_lastlevel').attr("disabled", true);
@@ -195,17 +202,23 @@ window.operateEvents = {
 
 			// console.log("上级级别 处理");
 			$('#txt_lastlevel').attr("disabled", false);
+			
 			// for (var i = 2; i < count; i++) {
 			//					
 			// $("#txt_lastlevel").append("<option value='" + String(i) + "'>" +
 			// orglevel[i-1]+ "</option>");
 			// }
+			
 			$("#txt_lastlevel").append(
 					"<option value='" + String(count - 1) + "'>"
 							+ orglevel[count - 2] + "</option>");
 
 		}
-		$("#txt_lastorgname").empty();
+		
+		
+		
+		
+		$("#txt_lastorgname").empty();         //机构名称
 		var level = $("#txt_lastlevel").val();
 		$.ajax({
 			type : "get",
@@ -449,6 +462,7 @@ function InitSubTable(index, row, $detail) {
 				pageSize : 100,
 				pageList : [ 100, 250 ],
 				showHeader : false,
+				
 				sidePagination : "server", // 分页方式：client客户端分页，server服务端分页（*）
 				dataField : 'rows', // 后端 json 对应的表格数据 key
 				columns : [ {
