@@ -19,7 +19,12 @@ public interface AttrDao  extends CrudRepository<DevAttr, Long>{
   
   	public DevAttr findByAttrid(Long attrid);
     
-    @Query(value ="SELECT a.* FROM devattr a WHERE nodeid  in (SELECT nodeid from orgnization where (LENGTH(PATH) - LENGTH(REPLACE(PATH,'/','')))=6 and PATH like CONCAT('%',?1,'%'))"+" limit ?2,?3"
+//    @Query(value ="SELECT a.* FROM devattr a WHERE nodeid  in (SELECT nodeid from orgnization where (LENGTH(PATH) - LENGTH(REPLACE(PATH,'/',''))=6 and PATH like CONCAT('%',?1,'%')))"+" limit ?2,?3"
+//    		,nativeQuery = true) 
+//    public List<DevAttr> findallBytcc(String tcc,int page,int pageSize);
+    
+    
+    @Query(value ="SELECT a.* FROM devattr a WHERE nodeid = ?1 "+" limit ?2,?3"
     		,nativeQuery = true) 
     public List<DevAttr> findallBytcc(String tcc,int page,int pageSize);
     
@@ -27,7 +32,11 @@ public interface AttrDao  extends CrudRepository<DevAttr, Long>{
     		,nativeQuery = true) 
     public String findImei(String devid);
 
-    @Query(value ="SELECT count(*) from orgnization where (LENGTH(PATH) - LENGTH(REPLACE(PATH,'/','')))=6 and PATH like CONCAT('%',?1,'%')"
+//    @Query(value ="SELECT count(*) from orgnization where (LENGTH(PATH) - LENGTH(REPLACE(PATH,'/','')))=6 and PATH like CONCAT('%',?1,'%')"
+//    		,nativeQuery = true) 
+//    public Integer totaloffindAll(String tcc);
+    
+    @Query(value ="SELECT count(*) from devattr where NODEID = ?1"
     		,nativeQuery = true) 
     public Integer totaloffindAll(String tcc);
     

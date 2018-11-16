@@ -51,7 +51,6 @@ public class OrgSettingServiceImpl implements OrgSettingService {
 		orgdao.updatePathBynewpath(curpath, path, curpath);  //更新path
 
 		
-		
 		orgdao.updateorgbynodeid(orgnewname, remark, nodeid);  //更新机构名称
 		// orgdao.updateorgbynodeid( orgname, path, remark , nodeid);
 		
@@ -108,7 +107,7 @@ public class OrgSettingServiceImpl implements OrgSettingService {
 		// TODO Auto-generated method stub
 		DevAttr attr = attrdao.findImeiByAttrid(attrid);
 		attrdao.deleteById(attrid);
-		orgdao.deleteNodeByNodeid(attrid); // 删除节点
+//		orgdao.deleteNodeByNodeid(attrid);  	// 删除节点  11-16
 		return attr;
 	}
 

@@ -214,9 +214,7 @@ window.operateEvents = {
 							+ orglevel[count - 2] + "</option>");
 
 		}
-		
-		
-		
+			
 		
 		$("#txt_lastorgname").empty();         //机构名称
 		var level = $("#txt_lastlevel").val();
@@ -346,6 +344,7 @@ function initTable(searchArgs) {
 		// queryParams: queryParams,
 		responseHandler : responseHandler,
 		clickToSelect : false,
+		singleSelect:true,    //11-16   单选
 		showHeader : false,
 
 		// sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
@@ -407,6 +406,19 @@ function initTable(searchArgs) {
 		// 第三个参数尤其重要，因为生成的子表的table在装载在$detail对象里面的。bootstrap
 		// table为我们生成了$detail这个对象，然后我们只需要往它里面填充我们想要的table即可。
 
+		//响应点击checkBox的函数
+		onCheck:function(row)
+		{
+			console.log("平台checkbox已经触发 row = "+ row);
+		},
+		//响应点击取消CheckBox的函数
+        onUncheck:function(row)
+        {
+        	console.log("平台checkbox已经取消触发 row = "+ row);      
+        },
+		
+		
+		
 		onExpandRow : function(index, row, $detail) {
 
 			var regex = new RegExp('/', 'g');
@@ -457,6 +469,9 @@ function InitSubTable(index, row, $detail) {
 					parentid : parentid
 				},
 				clickToSelect : true,
+				singleSelect:true,    //11-16   单选
+				
+				
 				detailView : true,// 父子表
 				uniqueId : "nodeid",
 				pageSize : 100,
@@ -506,10 +521,39 @@ function InitSubTable(index, row, $detail) {
 					events : "operateEvents",
 					formatter : operateFormatter
 				} ],
+				
+				
+				
+
+
+				
+				
 				// 无线循环取子表，直到子表里面没有记录
 				onExpandRow : function(index, row, $Subdetail) {
 					InitSubTable(index, row, $Subdetail);
 				},
+				
+				
+
+				//响应点击取消CheckBox的函数
+		        onUncheck:function(row)
+		        {
+		        	
+//		        	var temp = "";
+//		        	$(cur_table).find(":checkbox:checked").each(function(){
+//		        		　　temp = $(this).parents("tr").text();
+//		        		}); 
+		        	
+//		        	for(var i in row)
+//		        	{
+//		        		temp += i+":"+row[i]+"\n";
+//		        	}
+//		        	alert(temp);
+		        			        	
+		        	console.log("子表checkbox已经取消触发 row = "+ row.path);      
+		        },
+		        
+		        //响应点击checkBox的函数
 				onCheck : function(row) {
 
 					$("#txt_addorglevel").empty();

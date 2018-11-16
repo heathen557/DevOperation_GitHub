@@ -570,10 +570,16 @@ public class AttrController {
 		if (imei.equals("0")) {
 
 			Integer nodeidInt = orgdao.findTccByNodeid(nodeid); /// 找到tcc
+			
 			List<DevAttr> pages = attrDao.findallBytcc(Integer.toString(nodeidInt), (pagebnumber - 1) * pagesize,
 					pagesize);
 			Integer total = attrDao.totaloffindAll(Integer.toString(nodeidInt));
 			JSONObject result = new JSONObject();
+			
+//			System.out.println("总个数为：" + total + " nodeId = " + nodeidInt);
+//			System.out.println("实体为" + pages);
+			
+			
 			result.put("rows", pages);
 			result.put("total", total);
 			System.out.println(result.toJSONString());

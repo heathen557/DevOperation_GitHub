@@ -6,7 +6,7 @@ var tree;
 var updateoraddFlag ;
 var currentTcc = '莱斯停车场';
 var selectRowid;
-//获取选中的id
+// 获取选中的id
 function getIdSelections() {
     return $.map($table.bootstrapTable('getSelections'), function (row) {
     	console.log(row);
@@ -25,7 +25,7 @@ $(function(){
 	 dataInit();
 	 initTreeView();
 	 initTable(null);
-	 //initTreeView();
+	 // initTreeView();
 })
 
 
@@ -35,22 +35,23 @@ function initTreeView(){
 	        url: BASE_URL + "/orgnization/inittree",
 	        dataType: "json",
 	        success: function (result) {
-	       	//树形菜单初始化
+	       	// 树形菜单初始化
 	            $('#tree').treeview({
 	                data: result,         
-	                //showCheckbox: true,  
+	                // showCheckbox: true,
 	                highlightSelected: true,    
-	                //nodeIcon: 'glyphicon glyphicon-user',    //节点上的图标
+	                // nodeIcon: 'glyphicon glyphicon-user', //节点上的图标
 	                nodeIcon: 'glyphicon glyphicon-globe', 
-	                emptyIcon: '',    //没有子节点的节点图标
-	                multiSelect: false,    //多选
+	                emptyIcon: '',    // 没有子节点的节点图标
+	                multiSelect: false,    // 多选
+	                
 	                onNodeSelected: function(event, data) {
 	               	    // Your logic goes here
 	               	console.log("onNodeSelected");
 	               	temp = JSON.stringify(data);
-//	               	console.log(" data" + temp);
+// console.log(" data" + temp);
 //	               	
-//	               	console.log(" data.level" + data.level);
+// console.log(" data.level" + data.level);
 	               	$('#addberthbtn').attr('disabled',true);
 	               	if( data.level == 6){
 	               		currentTcc = data.text;
@@ -58,7 +59,8 @@ function initTreeView(){
 	               		globalParams['nodeid'] = data.href;
 	               		globalParams['devId'] = '0';
 	               		$('#txt_devid').val("");
-	               		$table.bootstrapTable('refresh');//刷新Table，Bootstrap Table 会自动执行重新查询
+	               		$table.bootstrapTable('refresh');// 刷新Table，Bootstrap
+															// Table 会自动执行重新查询
 	               		$('#addberthbtn').attr('disabled',false);
 	               	}
 	               }
@@ -70,85 +72,87 @@ function initTreeView(){
 	        	$('#addberthbtn').prop('disable',true);
 	                 $('#tree').treeview({
 	                data: tree,         // 数据源
-	                //showCheckbox: true,   //是否显示复选框
+	                // showCheckbox: true, //是否显示复选框
 	               	showBorder: false,  
-	                highlightSelected: true,    //是否高亮选中
-	                //nodeIcon: 'glyphicon glyphicon-user',    //节点上的图标
+	                highlightSelected: true,    // 是否高亮选中
+	                // nodeIcon: 'glyphicon glyphicon-user', //节点上的图标
 	                nodeIcon: 'glyphicon glyphicon-globe',
-	                emptyIcon: '',    //没有子节点的节点图标
-	                multiSelect: false,    //多选
+	                emptyIcon: '',    // 没有子节点的节点图标
+	                multiSelect: false,    // 多选
 	                onNodeChecked: function (event,data) {
-	                    //alert(data.nodeId);
+	                    // alert(data.nodeId);
 	                },
 	                onNodeSelected: function (event, data) {
-	                    //alert(data.nodeId);
+	                    // alert(data.nodeId);
 	                }
 	            }); 
 	        }
 	    });
 }
 
-//$(function () {
-//    $('#query-form1').bootstrapValidator({
-//　　　　message: 'This value is not valid',
-//        　feedbackIcons: {
-//            　　　　　　　　valid: 'glyphicon glyphicon-ok',
-//            　　　　　　　　invalid: 'glyphicon glyphicon-remove',
-//            　　　　　　　　validating: 'glyphicon glyphicon-refresh'
-//        　　　　　　　　   },
-//        fields: {
-//            sn: {
-//                message: '用户名验证失败',
-//                validators: {
-//                    notEmpty: {
-//                        message: 'sn不能为空'
-//                    }
-//                }
-//            },
-//            title: {
-//                validators: {
-//                    notEmpty: {
-//                        message: 'title不能为空'
-//                    }
-//                }
-//            }
-//        }
-//    });
-//});
+// $(function () {
+// $('#query-form1').bootstrapValidator({
+// message: 'This value is not valid',
+// feedbackIcons: {
+// valid: 'glyphicon glyphicon-ok',
+// invalid: 'glyphicon glyphicon-remove',
+// validating: 'glyphicon glyphicon-refresh'
+// },
+// fields: {
+// sn: {
+// message: '用户名验证失败',
+// validators: {
+// notEmpty: {
+// message: 'sn不能为空'
+// }
+// }
+// },
+// title: {
+// validators: {
+// notEmpty: {
+// message: 'title不能为空'
+// }
+// }
+// }
+// }
+// });
+// });
 
-//增加停车位，显示modal
+// 增加停车位，显示modal
 function addBerth(){
 	
 	
-	//显示停车场ajax
-//	$.ajax({  
-//        type: "get", 
-//        async:false, 
-//        url: BASE_URL + "/orgnization/findtcc",         
-//        dataType: 'json',  
-//       error : function() {
-//            alert('请求失败！ ');
-//        },
-//        success: function(data) {  
-////               console.log("保存返回的数据:"+JSON.stringify(data));
-//        	$("#txt_tcc1").empty();
-////        	for (var i = 0; i < data.tcclist.length; i++) {
-////		          if(data.tcc != data.tcclist[i]){
-////		        	 　$("#txt_tcc1").append("<option value='"+data.tcclist[i]+"'>"+data.tcclist[i]+"</option>");  
-////		          }
-////		         } 
-//        	$("#txt_tcc1").append("<option value='"+data.tcclist[i]+"'>"+data.tcclist[i]+"</option>");
-//		         // $('#txt_tcc1').val(data.tcc);
+	// 显示停车场ajax
+// $.ajax({
+// type: "get",
+// async:false,
+// url: BASE_URL + "/orgnization/findtcc",
+// dataType: 'json',
+// error : function() {
+// alert('请求失败！ ');
+// },
+// success: function(data) {
+// // console.log("保存返回的数据:"+JSON.stringify(data));
+// $("#txt_tcc1").empty();
+// // for (var i = 0; i < data.tcclist.length; i++) {
+// // if(data.tcc != data.tcclist[i]){
+// // $("#txt_tcc1").append("<option
+// value='"+data.tcclist[i]+"'>"+data.tcclist[i]+"</option>");
+// // }
+// // }
+// $("#txt_tcc1").append("<option
+// value='"+data.tcclist[i]+"'>"+data.tcclist[i]+"</option>");
+// // $('#txt_tcc1').val(data.tcc);
 //        	
-//        }
+// }
 //  
-//     }); 
+// });
 	$("#txt_tcc1").empty();
 	$("#txt_tcc1").append("<option value='"+currentTcc+"'>"+currentTcc+"</option>");
 	$('#BerthModal').modal('show');
 }
 
-//增加停车位
+// 增加停车位
 function submitData(){
 	 var param = $("#myberthform").serialize();
      console.log('param:'+param);
@@ -163,13 +167,13 @@ function submitData(){
 	               alert('请求失败！ ');
 	           },
 	           success: function(data) {  
-//	                  console.log("保存返回的数据:"+JSON.stringify(data));
+// console.log("保存返回的数据:"+JSON.stringify(data));
 	                  $('#BerthModal').modal('hide');
-//	                  if(data['msg']){
-//	                      toastr.success(data['msg']);
-//	                  }else{
-//	                      toastr.error(data['msg']);
-//	                  }          
+// if(data['msg']){
+// toastr.success(data['msg']);
+// }else{
+// toastr.error(data['msg']);
+// }
 	                  initTable(null);
 	           }
 	     
@@ -177,7 +181,7 @@ function submitData(){
 	    
 }
 
-//编辑
+// 编辑
 function submitData1(){
 	 var param = $("#myberthform1").serialize();
     console.log('param:'+param);
@@ -192,7 +196,7 @@ function submitData1(){
 	               alert('请求失败！ ');
 	           },
 	           success: function(data) {  
-//	                  console.log("保存返回的数据:"+JSON.stringify(data));
+// console.log("保存返回的数据:"+JSON.stringify(data));
 	                  $('#EditBerthModal').modal('hide');
 	                  $("#txt_tcc").html("");
 	                  if(data['msg']){
@@ -209,15 +213,15 @@ function submitData1(){
 }
 
 window.operateEvents = {
-		"click #RoleOfCancel":function(e,value,row,index){//删除 
-			//模态框显示
+		"click #RoleOfCancel":function(e,value,row,index){// 删除
+			// 模态框显示
 			$('#cancelModal').modal('show');
 			
 		},
-		"click #RoleOfEdit":function(e,value,row,index){//编辑
-			//模态框显示
+		"click #RoleOfEdit":function(e,value,row,index){// 编辑
+			// 模态框显示
 			
-			//ajax请求
+			// ajax请求
 			var ids = row.attrid;
 			 console.log("id："+ids);
 			if(ids == null){
@@ -241,18 +245,19 @@ window.operateEvents = {
 		                alert('请求失败！ ');
 		            },
 		            success: function(data) { 
-		            	//$("#txt_tcc").value("");
+		            	// $("#txt_tcc").value("");
 		                console.log("获取单条数据:"+JSON.stringify(data)); 
 		                  $('#txt_id').val(data.rows[0].attrid);
 		                  $('#txt_devid').val(data.rows[0].devid);
 		                  $('#txt_berth').val(data.rows[0].devpostion);
-		                  //$("#txt_berth").prepend("<option value='"+data.rows[0].devpostion+"'>"+data.rows[0].devpostion+"</option>");//添加第一个option值
+		                  // $("#txt_berth").prepend("<option
+							// value='"+data.rows[0].devpostion+"'>"+data.rows[0].devpostion+"</option>");//添加第一个option值
 		                  $('#txt_operator').val(data.rows[0].operator);
 		                  $('#txt_protocol').val(data.rows[0].protocol);
 		                  $('#txt_imei').val(data.rows[0].imei); 
 		                  $('#txt_regcode').val(data.rows[0].regcode); 
 		                 
-		                  $("#txt_tcc").prepend("<option value='"+data.tcc+"'>"+data.tcc+"</option>");//添加第一个option值
+		                  $("#txt_tcc").prepend("<option value='"+data.tcc+"'>"+data.tcc+"</option>");// 添加第一个option值
 				              　　　　for (var i = 0; i < data.tcclist.length; i++) {
 				          if(data.tcc != data.tcclist[i]){
 				        	 　$("#txt_tcc").append("<option value='"+data.tcclist[i]+"'>"+data.tcclist[i]+"</option>");  
@@ -260,7 +265,7 @@ window.operateEvents = {
 				         } 
 				          $('#txt_tcc').val(data.tcc);
 		                  $('#txt_imsi').val(data.rows[0].imsi);
-		                 //$("#modalTitle").text("设备参数配置");
+		                 // $("#modalTitle").text("设备参数配置");
 		                 $('#EditBerthModal').modal('show');
 		            }
 		          
@@ -274,7 +279,7 @@ window.operateEvents = {
 
 function cancelDev(){
 	// ajax请求
-	//获取id
+	// 获取id
 	
         console.log("selectRowid："+selectRowid);
         $.ajax({  
@@ -285,20 +290,22 @@ function cancelDev(){
             error : function() {
                 alert('请求失败！ ');
             },
-            success: function(data) { 
+            success: function(data)
+            { 
                 if(data['delmsg']){
                     toastr.success(data['delmsg']);
                 }else{
                     toastr.error(data['delmsg']);
                 } 
-                //重新初始化表格
+                // 重新初始化表格
                 initTable(null);
                 $('#cancelModal').modal('hide');
             }
           
-        });  
-  
+        });   
 }
+
+
 
 function operateFormatter(value, row, index) {
     return [
@@ -318,8 +325,8 @@ function initTable(searchArgs) {
 			url : BASE_URL + '/attribute/findAll',
 			cache: false,
 			dataType : "json",  // 数据类型
-			uniqueId: "attrid",//每行的唯一标识 
-			//height: 400,
+			uniqueId: "attrid",// 每行的唯一标识
+			// height: 400,
 			toolbar:'#toolbar',
 			striped: true,
 			pagination: true,
@@ -334,18 +341,18 @@ function initTable(searchArgs) {
 			queryParams: queryParams,
 			responseHandler: responseHandler,
 			clickToSelect: true,
-			sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*） 
-			dataField: 'rows', //后端 json 对应的表格数据 key
-			//editable:true,//开启编辑模式    
+			sidePagination: "server",           // 分页方式：client客户端分页，server服务端分页（*）
+			dataField: 'rows', // 后端 json 对应的表格数据 key
+			// editable:true,//开启编辑模式
 			columns: 
 			[
-//				{
-//		            field: 'state',
-//		            checkbox: true,
-//		            align: 'center',
-//		            valign: 'middle'
-//		        }, 
-				//{field:"rowid",title:"序列号",align:"center",valign:"middle",sortable:"false",visible:false},
+// {
+// field: 'state',
+// checkbox: true,
+// align: 'center',
+// valign: 'middle'
+// },
+				// {field:"rowid",title:"序列号",align:"center",valign:"middle",sortable:"false",visible:false},
 		        {field:"attrid",title:"序列号",align:"center",valign:"middle",sortable:"false" ,visible:false},
 				{field:"devid",title:"设备ID",align:"center",valign:"middle",sortable:"false",visible:false},
 				{field:"devpostion",title:"泊位号",align:"center",valign:"middle",sortable:"false"},
@@ -375,20 +382,22 @@ function initTable(searchArgs) {
 			],
 			onClickRow:function(row){
 				selectRowid = row.attrid;
+				
+				console.log('选中的  selectRowid = ' + selectRowid);
 			},
 			 onLoadSuccess: function () {
-            //加载成功时执行
+            // 加载成功时执行
             console.log("加载成功!");
            
         }, onLoadError: function () {
-            //加载失败时执行
+            // 加载失败时执行
              console.log("加载失败!");
           
         }, formatLoadingMessage: function () {
-            //正在加载
+            // 正在加载
             return "请稍等，正在加载中...";
         }, formatNoMatches: function () {
-            //没有匹配的结果
+            // 没有匹配的结果
             return '无符合条件的记录';
         }
         
@@ -398,47 +407,49 @@ function initTable(searchArgs) {
 
 function queryParams(params) {
 	var param = {};
-    param['devid'] = globalParams['devId'];//默认为devid=0
+    param['devid'] = globalParams['devId'];// 默认为devid=0
+    
+    
     $('#query-form').find('[name]').each(function () {
         var value = $(this).val();
-        console.log(value);
+        console.log('这里输出的内容是：'+value);
         if (value != '') {
         	console.log(value);
             param[$(this).attr('name')] = value;
         }
     });
  
-    param['pageSize'] = params.limit;   //页面大小
-    param['pageNumber'] = params.offset/params.limit + 1;   //页码
+    param['pageSize'] = params.limit;   // 页面大小
+    param['pageNumber'] = params.offset/params.limit + 1;   // 页码
     param['nodeid'] = globalParams['nodeid'];
     console.log('params:'+params.offset);
     console.log(param);
     return param;
 }
 
-//请求成功方法
+// 请求成功方法
 function responseHandler(result){
 	console.log("result.total:", result.total);
 	console.log("result.rows:", result.rows);
-//    var errcode = result.errcode;//在此做了错误代码的判断
+// var errcode = result.errcode;//在此做了错误代码的判断
 //    
-//    if(errcode != 0){
-//        alert("错误代码" + errcode);
-//        return;
-//    }
-    //如果没有错误则返回数据，渲染表格
+// if(errcode != 0){
+// alert("错误代码" + errcode);
+// return;
+// }
+    // 如果没有错误则返回数据，渲染表格
     return {
-        total : result.total, //总页数,前面的key必须为"total"
-        rows : result.rows //行数据，前面的key要与之前设置的dataField的值一致.
+        total : result.total, // 总页数,前面的key必须为"total"
+        rows : result.rows // 行数据，前面的key要与之前设置的dataField的值一致.
     };
 };
 
 function customSearch(text) {
 	
     	var value = $("#IMEI").val();
-        //console.log(value);
+        // console.log(value);
         if (value != '') {
-        	//console.log(value);
+        	// console.log(value);
         	globalParams['devId'] = value;
         }else {
 			alert("设备号不能为空！");
@@ -447,14 +458,14 @@ function customSearch(text) {
 		}
   
     $('#tree').treeview('clearSearch');
-   //通过设备号查找节点
+   // 通过设备号查找节点
     $.ajax({
         type: "get",
         url: BASE_URL + "/orgnization/searchnode",
         data:{'devId':globalParams['devId']},
         dataType: "json",
         success: function (data) {
-       	//树形菜单初始化
+       	// 树形菜单初始化
         
           console.log("search nodeid is :"  + data.nodename);
           if(data == ''){
@@ -474,10 +485,10 @@ function customSearch(text) {
     });
    
     $('#addberthbtn').attr('disabled',true);
-    $table.bootstrapTable('refresh');//刷新Table，Bootstrap Table 会自动执行重新查询
+    $table.bootstrapTable('refresh');// 刷新Table，Bootstrap Table 会自动执行重新查询
 }
 
-//查找组织机构
+// 查找组织机构
 function orgSearch(){
 	dataInit();
 	var nodeId;
@@ -490,18 +501,31 @@ function orgSearch(){
 		}]);
 	$('#tree').treeview('expandNode', [ searchNodes, { levels: 2, silent: true } ]);
 	console.log("searchnodes:" + searchNodes);
-//	if(searchNodes.length==1){
-//		nodeId = searchNodes[0].nodeId;
-//		$("#treeview").treeview('selectNode',[nodeId,{silent:true}]);
-//	}else{
-//		$("#treeview").treeview('selectNode',[0,{silent:true}]);
-//	}
+// if(searchNodes.length==1){
+// nodeId = searchNodes[0].nodeId;
+// $("#treeview").treeview('selectNode',[nodeId,{silent:true}]);
+// }else{
+// $("#treeview").treeview('selectNode',[0,{silent:true}]);
+// }
 	if(searchNodes[0].level == 6){
 		globalParams['nodeid'] = nodeId;
 		
 	}
 
 }
+
+
+// 响应回车按键，进行组织机构检索
+document.onkeydown = function(e) {
+	var theEvent = window.event || e;
+	var code = theEvent.keyCode || theEvent.which;
+	if (code == 13) {
+		console.log("组织机构检索    回车键开启响应");
+		orgSearch();
+	}
+}
+
+
 
 function resetSearch() {
     $('#query-form').find('[name]').each(function () {
