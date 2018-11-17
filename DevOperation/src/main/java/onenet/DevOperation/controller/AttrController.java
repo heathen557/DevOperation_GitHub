@@ -292,6 +292,10 @@ public class AttrController {
 			@RequestParam(value = "imeih") String imeih, @RequestParam(value = "imsih") String imsih)
 
 	{
+		
+		System.out.println("operation="+operator +"  protocol="+protocol+"  tcc="+tcc + "  regcode"+regcode
+				+"  berthl"+berthl+"  imeil"+imeil+"  imsil"+imsil +" berthh"+berthh +"  imeih"+imeih+"  imsih"+imsih);
+			
 		if (berthh.equals("") || berthh == null) {
 			// 添加组织机构属性
 
@@ -341,13 +345,16 @@ public class AttrController {
 		// 添加停车位属性
 		if (protocol.equals("01")) {
 			devicetype = "bg36";
-		} else if (protocol.equals("02")) {
+		}
+		else if (protocol.equals("02")) {
 			devicetype = "bc95";
-		} else if (protocol.equals("03")) {
-
+		}
+		else if (protocol.equals("03")) {
 			devicetype = "bc95b5";
 		}
+		
 		String path = orgdao.findPathByNodename(tcc);
+		
 		try {
 
 			for (long i = imeilLong; i < (imeihLong - imeilLong + 1); i++) {

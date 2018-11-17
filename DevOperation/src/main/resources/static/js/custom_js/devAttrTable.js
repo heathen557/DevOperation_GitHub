@@ -155,7 +155,7 @@ function addBerth(){
 // 增加停车位
 function submitData(){
 	 var param = $("#myberthform").serialize();
-     console.log('param:'+param);
+     console.log('添加停车位时的参数param:'+param);
 
 		$.ajax({  
 	           type: "get", 
@@ -412,7 +412,7 @@ function queryParams(params) {
     
     $('#query-form').find('[name]').each(function () {
         var value = $(this).val();
-        console.log('这里输出的内容是：'+value);
+        console.log('这里输出的内容是——————：'+value);
         if (value != '') {
         	console.log(value);
             param[$(this).attr('name')] = value;
@@ -500,15 +500,22 @@ function orgSearch(){
 		  revealResults: true,  // reveal matching nodes
 		}]);
 	$('#tree').treeview('expandNode', [ searchNodes, { levels: 2, silent: true } ]);
-	console.log("searchnodes:" + searchNodes);
+	console.log("searchnodes  + :" + searchNodes);
 // if(searchNodes.length==1){
 // nodeId = searchNodes[0].nodeId;
 // $("#treeview").treeview('selectNode',[nodeId,{silent:true}]);
 // }else{
 // $("#treeview").treeview('selectNode',[0,{silent:true}]);
 // }
+	
+	console.log('查找到的节点的 level = ' + searchNodes[0].level);
+	
 	if(searchNodes[0].level == 6){
-		globalParams['nodeid'] = nodeId;
+//		globalParams['nodeid'] = nodeId;
+		
+		globalParams['nodeid'] = searchNodes[0].href;   //11-17
+		
+		$table.bootstrapTable('refresh');// 刷新Table，Bootstrap Table 会自动执行重新查询  11-17
 		
 	}
 
@@ -520,7 +527,7 @@ document.onkeydown = function(e) {
 	var theEvent = window.event || e;
 	var code = theEvent.keyCode || theEvent.which;
 	if (code == 13) {
-		console.log("组织机构检索    回车键开启响应");
+		console.log("泊位管理界面   组织机构检索    回车键开启响应");
 		orgSearch();
 	}
 }
