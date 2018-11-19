@@ -107,6 +107,12 @@ public class DevAttr implements Serializable {
 	public void setNodeid(String nodeid) {
 		this.nodeid = nodeid;
 	}
+	@Override
+	public String toString() {
+		return "DevAttr [attrid=" + attrid + ", devid=" + devid + ", devpostion=" + devpostion + ", operator="
+				+ operator + ", protocol=" + protocol + ", imei=" + imei + ", devicetype=" + devicetype + ", imsi="
+				+ imsi + ", regcode=" + regcode + ", nodeid=" + nodeid + "]";
+	}
     
    
 }

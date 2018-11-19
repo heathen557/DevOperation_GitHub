@@ -78,7 +78,11 @@ public class OrgSettingServiceImpl implements OrgSettingService {
 		// TODO Auto-generated method stub
 		DevAttr devAttr = new DevAttr(null, null, berthl, operator, protocol, imeil, devicetype, imsil, regcode,
 				nextnodeid);
-		orgdao.SaveOrg(nextnodeid, berthl, path, "");
+		
+		System.out.println("构建的实体：" + devAttr);
+		
+		
+//		orgdao.SaveOrg(nextnodeid, berthl, path, "");   //no need
 		attrdao.save(devAttr);
 
 		return devAttr;

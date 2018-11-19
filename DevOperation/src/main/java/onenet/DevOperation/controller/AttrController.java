@@ -298,7 +298,8 @@ public class AttrController {
 			
 		if (berthh.equals("") || berthh == null) {
 			// 添加组织机构属性
-
+			System.out.println("函数已经进来了");
+			
 			String nextnodeid = orgdao.findNextNodeid();
 			String path = orgdao.findPathByNodename(tcc);
 			String devicetype = "";
@@ -307,11 +308,15 @@ public class AttrController {
 			log.info("path:" + path);
 			path += "/";
 			path += nextnodeid;
-			Orgnization orgnization = new Orgnization(nextnodeid, berthl, path, "");
-			log.info(orgnization.toString());
+//			Orgnization orgnization = new Orgnization(nextnodeid, berthl, path, "");
+//			log.info(orgnization.toString());
+			
+			String nodeid = orgdao.findNodeidByTcc(tcc);
+			System.out.println("查找到的节点ID = " + nodeid);
+			
+			
 
 			// orgdao.save(orgnization);
-
 			// 添加停车位属性
 			if (protocol.equals("01")) {
 				devicetype = "bg36";
@@ -323,7 +328,7 @@ public class AttrController {
 			// DevAttr devAttr = new
 			// DevAttr(null,null,berthl,operator,protocol,imeil,devicetype,imsil,regcode,nextnodeid);
 			try {
-				orgSettingService.addBerth(berthl, operator, protocol, imeil, devicetype, imsil, regcode, nextnodeid,
+				orgSettingService.addBerth(berthl, operator, protocol, imeil, devicetype, imsil, regcode, nodeid,
 						path);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -334,7 +339,9 @@ public class AttrController {
 			asyncTask.RegDevices(imeil, devicetype, imsil);
 			return "{\"addberth\":\"ok\"}";
 		}
-
+		
+		
+		//批量添加
 		long imeilLong = Long.valueOf(imeil);
 		long imeihLong = Long.valueOf(imeih);
 		long berthlLong = Long.valueOf(berthl);
@@ -356,11 +363,20 @@ public class AttrController {
 		String path = orgdao.findPathByNodename(tcc);
 		
 		try {
+			
+			String nodeid = orgdao.findNodeidByTcc(tcc);
+			System.out.println("查找到的节点ID = " + nodeid);
+			System.out.println("添加的节点的个数为 = " + (imeihLong - imeilLong + 1));
+			long len = imeihLong - imeilLong + 1;
 
-			for (long i = imeilLong; i < (imeihLong - imeilLong + 1); i++) {
-				String nextnodeid = orgdao.findNextNodeid();
-				path += "/";
-				path += nextnodeid;
+			for (long i = 0; i < len; i++) {
+				
+				
+				System.out.println("进入到循环的次数：" + (i+1));
+				
+//				String nextnodeid = orgdao.findNextNodeid();
+//				path += "/";
+//				path += nextnodeid;
 				// Orgnization orgnization = new
 				// Orgnization(nextnodeid,Long.toString(berthlLong),path,"");
 
@@ -368,8 +384,8 @@ public class AttrController {
 				// DevAttr(null,null,Long.toString(berthlLong),operator,protocol,Long.toString(imeilLong),devicetype,Long.toString(imsilLong),regcode,nextnodeid);
 
 				orgSettingService.addBerth(Long.toString(berthlLong), operator, protocol, Long.toString(imeilLong),
-						devicetype, Long.toString(imsilLong), regcode, nextnodeid, path);
-				asyncTask.RegDevices(Long.toString(imeilLong), devicetype, Long.toString(imsilLong));
+						devicetype, Long.toString(imsilLong), regcode, nodeid, path);
+//				asyncTask.RegDevices(Long.toString(imeilLong), devicetype, Long.toString(imsilLong));
 				imeilLong++;
 				berthlLong++;
 				imsilLong++;
@@ -388,6 +404,8 @@ public class AttrController {
 		return "{\"addberth\":\"ok\"}";
 	}
 
+	
+	
 	@RequestMapping(value = "/orgnization/editberth", method = RequestMethod.GET)
 	@ResponseBody
 	public String editBerth(@RequestParam(value = "attrid") Long attrid,
